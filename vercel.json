@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/register", "destination": "/subcontractor-registration", "permanent": false }
+  ]
+}
