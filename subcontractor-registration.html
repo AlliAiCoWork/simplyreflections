@@ -27,21 +27,8 @@
     <style>
         .step-badge { width: 2.5rem; height: 2.5rem; border-radius: 9999px; background: var(--accent-green); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem; }
         .form-shell { min-height: 520px; }
-        #ghl-form-wrap iframe { width: 100%; border: none; border-radius: 8px; }
+        #ghl-form-wrap iframe { width: 100%; min-height: 1038px; border: none; border-radius: 8px; }
         .doc-card .doc-icon { width: 4rem; height: 4rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; background: var(--light-blue); color: var(--primary-blue); font-size: 1.6rem; }
-        .req-list li { display: flex; align-items: flex-start; gap: .6rem; }
-        .form-label { display: block; font-weight: 600; color: var(--dark-text); margin-bottom: .4rem; font-size: .95rem; }
-        .form-label .req { color: #e53e3e; }
-        .form-input { width: 100%; border: 1px solid #cbd5e0; border-radius: .5rem; padding: .75rem 1rem; font-size: 1rem; color: var(--dark-text); background: #fff; transition: border-color .2s, box-shadow .2s; }
-        .form-input:focus { outline: none; border-color: var(--secondary-blue); box-shadow: 0 0 0 3px rgba(30, 136, 229, .2); }
-        .form-input.is-invalid { border-color: #e53e3e; }
-        .form-hint { font-size: .8rem; color: #718096; margin-top: .35rem; }
-        .form-error { background: #fff5f5; border: 1px solid #feb2b2; color: #c53030; border-radius: .5rem; padding: .75rem 1rem; font-size: .95rem; }
-        .otp-input { width: 12rem; max-width: 100%; text-align: center; font-size: 2rem; letter-spacing: .8rem; font-weight: 700; border: 2px solid #cbd5e0; border-radius: .75rem; padding: .6rem .5rem .6rem 1.3rem; color: var(--primary-blue); }
-        .otp-input:focus { outline: none; border-color: var(--secondary-blue); box-shadow: 0 0 0 3px rgba(30, 136, 229, .2); }
-        .link-btn { color: var(--secondary-blue); font-weight: 600; background: none; border: 0; padding: 0; cursor: pointer; }
-        .link-btn:hover { color: var(--accent-green); }
-        button[disabled] { opacity: .6; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -108,8 +95,8 @@
                         <p class="uppercase tracking-widest text-accent-green font-semibold mb-3">Join the Crew</p>
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">Subcontractor Registration</h1>
                         <p class="text-lg mb-6 text-blue-100">
-                            Register with Simply Reflections in about two minutes. Confirm your cell with a 4-digit text code,
-                            and we send the Subcontractor Agreement to e-sign, followed by our Standard Operating Procedures.
+                            Register with Simply Reflections in about two minutes. Submit the form below and we text you the
+                            Subcontractor Agreement to e-sign, followed by our Standard Operating Procedures.
                         </p>
                         <a class="btn-secondary ripple" href="#register">Start Registration</a>
                     </div>
@@ -119,7 +106,7 @@
                             <ol class="space-y-5">
                                 <li class="flex items-start">
                                     <span class="step-badge mr-4 flex-shrink-0">1</span>
-                                    <div><strong class="block text-lg">Register</strong><span class="text-gray-200">Fill out the form below, then confirm your cell phone with the 4-digit code we text you.</span></div>
+                                    <div><strong class="block text-lg">Register</strong><span class="text-gray-200">Fill out the form below with your business details and the cell number we should text.</span></div>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="step-badge mr-4 flex-shrink-0">2</span>
@@ -147,109 +134,28 @@
                             Everything here is used only to set you up for scheduling and payment. Your information stays private.
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-lg p-4 sm:p-8 form-shell" data-aos="fade-up" data-aos-delay="100">
-                        <form id="reg-form" class="space-y-6" novalidate>
-                            <div class="grid sm:grid-cols-2 gap-5">
-                                <div>
-                                    <label for="firstName" class="form-label">First Name <span class="req">*</span></label>
-                                    <input id="firstName" name="firstName" class="form-input" type="text" autocomplete="given-name" required>
-                                </div>
-                                <div>
-                                    <label for="lastName" class="form-label">Last Name <span class="req">*</span></label>
-                                    <input id="lastName" name="lastName" class="form-input" type="text" autocomplete="family-name" required>
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <label for="companyName" class="form-label">Company Name <span class="req">*</span></label>
-                                    <input id="companyName" name="companyName" class="form-input" type="text" autocomplete="organization" required>
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <label for="address1" class="form-label">Business Address <span class="req">*</span></label>
-                                    <input id="address1" name="address1" class="form-input" type="text" autocomplete="address-line1" placeholder="Street address" required>
-                                </div>
-                                <div>
-                                    <label for="city" class="form-label">City <span class="req">*</span></label>
-                                    <input id="city" name="city" class="form-input" type="text" autocomplete="address-level2" required>
-                                </div>
-                                <div class="grid grid-cols-2 gap-5">
-                                <div>
-                                    <label for="state" class="form-label">State <span class="req">*</span></label>
-                                    <input id="state" name="state" class="form-input" type="text" autocomplete="address-level1" maxlength="2" placeholder="AZ" required>
-                                </div>
-                                <div>
-                                    <label for="postalCode" class="form-label">ZIP <span class="req">*</span></label>
-                                    <input id="postalCode" name="postalCode" class="form-input" type="text" autocomplete="postal-code" inputmode="numeric" maxlength="10" required>
-                                </div>
-                                </div>
-                                <div>
-                                    <label for="phone" class="form-label">Cell Phone <span class="req">*</span></label>
-                                    <input id="phone" name="phone" class="form-input" type="tel" autocomplete="tel" inputmode="tel" placeholder="(602) 555-0123" required>
-                                    <p class="form-hint">We text your 4-digit verification code and documents to this number.</p>
-                                </div>
-                                <div>
-                                    <label for="website" class="form-label">Website</label>
-                                    <input id="website" name="website" class="form-input" type="text" autocomplete="url" inputmode="url" placeholder="yourcompany.com (optional)">
-                                </div>
-                                <div>
-                                    <label for="ein" class="form-label">EIN <span class="req">*</span></label>
-                                    <input id="ein" name="ein" class="form-input" type="text" inputmode="numeric" placeholder="12-3456789" required>
-                                </div>
-                                <div>
-                                    <label for="emergencyName" class="form-label">Emergency Contact Name <span class="req">*</span></label>
-                                    <input id="emergencyName" name="emergencyName" class="form-input" type="text" required>
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <label for="emergencyPhone" class="form-label">Emergency Contact Phone <span class="req">*</span></label>
-                                    <input id="emergencyPhone" name="emergencyPhone" class="form-input" type="tel" inputmode="tel" required>
-                                </div>
-                            </div>
-                            <div id="reg-error" class="hidden form-error" role="alert"></div>
-                            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                                <p class="text-sm text-gray-500 text-center sm:text-left">Step 1 of 2. Next, we text you a 4-digit code to confirm your number.</p>
-                                <button type="submit" id="reg-submit" class="btn-primary ripple whitespace-nowrap">Send Verification Code</button>
-                            </div>
-                        </form>
-
-                        <div id="reg-otp" class="hidden text-center py-6">
-                            <div class="doc-icon"><i class="fas fa-mobile-alt"></i></div>
-                            <h3 class="text-2xl font-bold text-primary-blue mb-2">Enter your 4-digit code</h3>
-                            <p class="text-gray-600 mb-6">We texted a code to <span id="otp-phone" class="font-semibold"></span>. It expires in 10 minutes.</p>
-                            <form id="otp-form" novalidate>
-                                <input id="otp-code" name="code" class="otp-input" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" placeholder="&bull;&bull;&bull;&bull;" required>
-                                <div id="otp-error" class="hidden form-error mt-4 max-w-md mx-auto" role="alert"></div>
-                                <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-5">
-                                    <button type="submit" id="otp-submit" class="btn-secondary ripple">Verify &amp; Send My Documents</button>
-                                    <button type="button" id="otp-resend" class="link-btn">Resend code</button>
-                                </div>
-                            </form>
-                            <p class="text-sm text-gray-500 mt-6">Wrong number? <button type="button" id="otp-back" class="link-btn">Go back and edit</button></p>
-                        </div>
-
-                        <div id="reg-done" class="hidden text-center py-10">
-                            <div class="doc-icon" style="background: var(--light-green); color: var(--accent-green);"><i class="fas fa-check"></i></div>
-                            <h3 class="text-2xl font-bold text-primary-blue mb-3">You are verified<span id="done-name"></span>!</h3>
-                            <p class="text-gray-600 max-w-xl mx-auto mb-6">Check your texts. The Subcontractor Agreement is on its way for you to e-sign, and the Standard Operating Procedures will follow right behind it.</p>
-                            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                                <a href="agreement.html" class="btn-primary ripple">Preview the Agreement</a>
-                                <a href="sop.html" class="btn-secondary ripple">Preview the SOP</a>
-                            </div>
-                        </div>
-
-                        <div id="reg-unavailable" class="hidden text-center py-10">
-                            <i class="fas fa-file-alt text-5xl text-secondary-blue mb-4"></i>
-                            <h3 class="text-2xl font-bold text-primary-blue mb-3">Online registration is temporarily unavailable</h3>
-                            <p class="text-gray-600 max-w-xl mx-auto mb-6">
-                                Text us at <a href="sms:6029993983" class="text-secondary-blue font-semibold">602-999-3983</a> with the details below and we will get you set up right away.
-                            </p>
-                            <ul class="req-list inline-block text-left text-gray-700 space-y-2 mb-8">
-                                <li><i class="fas fa-check text-accent-green mt-1"></i><span>First and last name</span></li>
-                                <li><i class="fas fa-check text-accent-green mt-1"></i><span>Company name and business address</span></li>
-                                <li><i class="fas fa-check text-accent-green mt-1"></i><span>Cell phone and website</span></li>
-                                <li><i class="fas fa-check text-accent-green mt-1"></i><span>EIN</span></li>
-                                <li><i class="fas fa-check text-accent-green mt-1"></i><span>Emergency contact name and phone</span></li>
-                            </ul>
-                            <div>
-                                <a href="sms:6029993983" onclick="trackEvent('Contact', 'Subcontractor Registration Text')" class="btn-secondary ripple">Text 602-999-3983</a>
-                            </div>
+                    <div class="bg-white rounded-lg shadow-lg p-2 sm:p-6 form-shell" data-aos="fade-up" data-aos-delay="100">
+                        <div id="ghl-form-wrap">
+                            <iframe
+                                src="https://api.leadconnectorhq.com/widget/form/cmluepKoUFj467gwgBaP"
+                                style="width:100%;height:100%;border:none;border-radius:8px"
+                                id="inline-cmluepKoUFj467gwgBaP"
+                                data-layout="{'id':'INLINE'}"
+                                data-trigger-type="alwaysShow"
+                                data-trigger-value=""
+                                data-activation-type="alwaysActivated"
+                                data-activation-value=""
+                                data-deactivation-type="neverDeactivate"
+                                data-deactivation-value=""
+                                data-form-name="Sub-Contractor Registration"
+                                data-height="1038"
+                                data-layout-iframe-id="inline-cmluepKoUFj467gwgBaP"
+                                data-form-id="cmluepKoUFj467gwgBaP"
+                                data-cookie-consent="true"
+                                data-cookie-consent-provider="auto"
+                                title="Sub-Contractor Registration">
+                            </iframe>
+                            <script src="https://link.msgsndr.com/js/form_embed.js"></script>
                         </div>
                     </div>
                 </div>
@@ -401,92 +307,5 @@
     <script type="text/javascript" src="https://seal-santabarbara.bbb.org/inc/legacy.js"></script>
     <script src="assets/js/script.js"></script>
 
-    <!-- Registration + 4-digit OTP flow (Vercel functions -> GoHighLevel) -->
-    <script>
-    (function () {
-        var API_REGISTER = '/api/register';
-        var API_VERIFY = '/api/verify';
-        var $ = function (id) { return document.getElementById(id); };
-        var regForm = $('reg-form'), otpPanel = $('reg-otp'), donePanel = $('reg-done'), unavailable = $('reg-unavailable');
-        var regError = $('reg-error'), otpError = $('otp-error');
-        var token = null, submittedData = null;
-        var REQUIRED = ['firstName', 'lastName', 'companyName', 'address1', 'city', 'state', 'postalCode', 'phone', 'ein', 'emergencyName', 'emergencyPhone'];
-
-        function show(el) { el.classList.remove('hidden'); }
-        function hide(el) { el.classList.add('hidden'); }
-        function setError(el, msg) { if (!msg) { hide(el); el.textContent = ''; return; } el.textContent = msg; show(el); }
-        function busy(btn, on, label) { btn.disabled = on; if (label !== undefined) btn.textContent = label; }
-        function scrollToCard() { var el = $('register'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        function digits(v) { return String(v || '').replace(/\D/g, ''); }
-
-        function collect() {
-            var d = {};
-            new FormData(regForm).forEach(function (v, k) { d[k] = String(v).trim(); });
-            return d;
-        }
-        function validate(d) {
-            var missing = REQUIRED.filter(function (k) { return !d[k]; });
-            regForm.querySelectorAll('.form-input').forEach(function (i) { i.classList.toggle('is-invalid', missing.indexOf(i.name) !== -1); });
-            if (missing.length) return 'Please fill in all required fields.';
-            var ph = digits(d.phone); if (ph.length === 11 && ph.charAt(0) === '1') ph = ph.slice(1);
-            if (ph.length !== 10) { $('phone').classList.add('is-invalid'); return 'Please enter a valid 10-digit cell phone number.'; }
-            if (digits(d.ein).length !== 9) { $('ein').classList.add('is-invalid'); return 'An EIN is 9 digits (format 12-3456789).'; }
-            return '';
-        }
-        async function post(url, body) {
-            var res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-            var data = {};
-            try { data = await res.json(); } catch (e) {}
-            if (res.status === 503) throw { unavailable: true, message: data.error || '' };
-            if (!res.ok) throw { message: data.error || 'Something went wrong. Please try again.', data: data };
-            return data;
-        }
-        async function sendCode(isResend) {
-            var d = (isResend && submittedData) ? submittedData : collect();
-            if (!isResend) { var err = validate(d); if (err) { setError(regError, err); return; } }
-            setError(regError, ''); setError(otpError, '');
-            var btn = isResend ? $('otp-resend') : $('reg-submit');
-            busy(btn, true, isResend ? 'Sending...' : 'Sending code...');
-            try {
-                var out = await post(API_REGISTER, d);
-                token = out.token; submittedData = d;
-                $('otp-phone').textContent = out.phoneMasked || d.phone;
-                $('otp-code').value = '';
-                hide(regForm); show(otpPanel); scrollToCard();
-                $('otp-code').focus();
-            } catch (e) {
-                if (e.unavailable) { hide(regForm); hide(otpPanel); show(unavailable); scrollToCard(); return; }
-                setError(isResend ? otpError : regError, e.message);
-            } finally {
-                busy(btn, false, isResend ? 'Resend code' : 'Send Verification Code');
-            }
-        }
-
-        regForm.addEventListener('submit', function (e) { e.preventDefault(); sendCode(false); });
-        $('otp-resend').addEventListener('click', function () { sendCode(true); });
-        $('otp-back').addEventListener('click', function () { submittedData = null; token = null; setError(otpError, ''); hide(otpPanel); show(regForm); scrollToCard(); });
-        $('otp-code').addEventListener('input', function () { this.value = digits(this.value).slice(0, 4); });
-        $('otp-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            var code = $('otp-code').value;
-            if (code.length !== 4) { setError(otpError, 'Enter the 4-digit code from your text message.'); return; }
-            setError(otpError, '');
-            busy($('otp-submit'), true, 'Verifying...');
-            try {
-                await post(API_VERIFY, { token: token, code: code });
-                $('done-name').textContent = (submittedData && submittedData.firstName) ? ', ' + submittedData.firstName : '';
-                hide(otpPanel); show(donePanel); scrollToCard();
-                if (typeof trackEvent === 'function') trackEvent('Lead', 'Subcontractor Registration Verified');
-            } catch (e) {
-                if (e.unavailable) { hide(otpPanel); show(unavailable); scrollToCard(); return; }
-                if (e.data && e.data.token) token = e.data.token;
-                setError(otpError, e.message);
-                $('otp-code').value = ''; $('otp-code').focus();
-            } finally {
-                busy($('otp-submit'), false, 'Verify & Send My Documents');
-            }
-        });
-    })();
-    </script>
 </body>
 </html>
