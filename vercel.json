@@ -2,6 +2,25 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/register", "destination": "/subcontractor-registration", "permanent": false }
+    {
+      "source": "/register",
+      "destination": "/subcontractor-registration",
+      "permanent": false
+    },
+    {
+      "source": "/reviewus",
+      "destination": "https://g.page/r/CfIi4Ad4mO1FEBM/review",
+      "permanent": false
+    },
+    {
+      "source": "/review",
+      "destination": "https://g.page/r/CfIi4Ad4mO1FEBM/review",
+      "permanent": false
+    },
+    {
+      "source": "/reviews",
+      "destination": "https://g.page/r/CfIi4Ad4mO1FEBM/review",
+      "permanent": false
+    }
   ]
 }
