@@ -97,7 +97,11 @@
             <h1 class="text-2xl font-bold mb-2" id="doneTitle">Thank you!</h1>
             <p class="text-gray-600 mb-2" id="doneCopy"></p>
             <p class="text-xs text-gray-400" id="doneRef"></p>
-            <button class="btn btn-brand mt-8" onclick="location.reload()">Start another job</button>
+            <div id="reviewBlock" class="hidden mt-8">
+                <p class="text-gray-700 font-semibold mb-3">Happy with the work? A quick Google review helps Max a ton.</p>
+                <a id="reviewBtn" class="btn btn-yes" href="#" target="_blank" rel="noopener">&#11088; LEAVE A GOOGLE REVIEW</a>
+            </div>
+            <button class="btn btn-brand mt-6" onclick="location.reload()">Start another job</button>
         </section>
     </div>
 
@@ -105,6 +109,20 @@
     // Config
     var ENDPOINT = 'https://n8n.dev.quantumos.ai/webhook/sr-job-completed';
     var KEY = 'sr-jobdone-Q8m4v';
+    // Google review links by state (Arizona = Peoria listing; California = CA listing)
+    var REVIEW_AZ = 'https://g.page/r/CfIi4Ad4mO1FEBM/review';
+    var REVIEW_CA = 'https://g.page/r/CfIi4Ad4mO1FEBM/review'; // TODO: replace with the California listing's review link
+    function stateFromAddress(a) {
+        a = String(a || '');
+        if (/\bcalifornia\b/i.test(a) || /(^|[\s,])CA([\s,.]|$)/.test(a)) return 'CA';
+        if (/\barizona\b/i.test(a) || /(^|[\s,])AZ([\s,.]|$)/.test(a)) return 'AZ';
+        var z = (a.match(/\b(\d{5})(?:-\d{4})?\b/g) || []).map(function (m) { return parseInt(m.slice(0, 5), 10); });
+        for (var i = 0; i < z.length; i++) {
+            if (z[i] >= 90000 && z[i] <= 96199) return 'CA';
+            if (z[i] >= 85000 && z[i] <= 86599) return 'AZ';
+        }
+        return 'AZ';
+    }
     var state = { approved: null };
 
     function $(id) { return document.getElementById(id); }
@@ -186,7 +204,8 @@
             reason: state.approved ? '' : $('reason').value.trim(),
             signature: canvas.toDataURL('image/png'),
             submitted_at: new Date().toISOString(),
-            page: location.href
+            page: location.href,
+            state: stateFromAddress($('address').value)
         };
         fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
             .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
@@ -198,6 +217,14 @@
                     ? 'Your approval has been recorded and sent to Simply Reflections.'
                     : 'Your feedback has been sent straight to Max. He will reach out shortly.';
                 $('doneRef').textContent = j.ref ? 'Ref ' + j.ref : '';
+                if (state.approved) {
+                    var st = stateFromAddress($('address').value);
+                    $('reviewBtn').href = st === 'CA' ? REVIEW_CA : REVIEW_AZ;
+                    $('reviewBtn').textContent = '\u2B50 LEAVE A GOOGLE REVIEW (' + (st === 'CA' ? 'California' : 'Arizona') + ')';
+                    $('reviewBlock').classList.remove('hidden');
+                } else {
+                    $('reviewBlock').classList.add('hidden');
+                }
                 show(5);
             })
             .catch(function (e) {
