@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Job Completed | Simply Reflections</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+    <style>
+        :root { --primary-blue: #0a4b9e; }
+        body { font-family: 'Poppins', sans-serif; background: #f5f7fa; }
+        .brand { color: var(--primary-blue); }
+        .bg-brand { background: var(--primary-blue); }
+        .btn { display: block; width: 100%; padding: 18px 20px; border-radius: 14px; font-weight: 700; font-size: 20px; text-align: center; transition: transform .05s ease, opacity .15s ease; -webkit-tap-highlight-color: transparent; }
+        .btn:active { transform: scale(.98); }
+        .btn[disabled] { opacity: .5; }
+        .btn-brand { background: var(--primary-blue); color: #fff; }
+        .btn-yes { background: #15803d; color: #fff; font-size: 26px; padding: 28px 20px; }
+        .btn-no { background: #b91c1c; color: #fff; font-size: 26px; padding: 28px 20px; }
+        .field { width: 100%; padding: 14px 14px; font-size: 17px; border: 2px solid #d1d9e6; border-radius: 12px; background: #fff; }
+        .field:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(10,75,158,.15); }
+        .step { display: none; }
+        .step.active { display: block; }
+        #sig { width: 100%; height: 220px; background: #fff; border: 2px dashed #9cbbde; border-radius: 12px; touch-action: none; }
+        .logo-wrap { width: 72px; height: 72px; border-radius: 9999px; overflow: hidden; background: #000; }
+        .dot { width: 10px; height: 10px; border-radius: 9999px; background: #c6cbd3; }
+        .dot.on { background: var(--primary-blue); }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="max-w-md mx-auto px-5 py-6">
+        <div class="flex items-center justify-center mb-5">
+            <div class="logo-wrap mr-3"><img src="assets/img/simply-reflections.jpg" alt="Simply Reflections" class="w-full h-full object-cover"></div>
+            <div>
+                <div class="font-extrabold text-xl leading-tight brand">SIMPLY REFLECTIONS</div>
+                <div class="text-xs tracking-widest text-gray-500 uppercase">Job Completion</div>
+            </div>
+        </div>
+        <div class="flex justify-center space-x-2 mb-6" id="dots">
+            <span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+
+        <!-- STEP 1: job details -->
+        <section id="step1" class="step active">
+            <h1 class="text-2xl font-bold mb-1">Job details</h1>
+            <p class="text-gray-500 mb-5 text-sm">Technician: fill this in before handing the phone to the homeowner.</p>
+            <label class="block font-semibold mb-1" for="name">Homeowner name</label>
+            <input id="name" class="field mb-4" type="text" autocomplete="off" placeholder="First and last name" required>
+            <label class="block font-semibold mb-1" for="address">Address</label>
+            <input id="address" class="field mb-4" type="text" autocomplete="off" placeholder="Street, city" required>
+            <label class="block font-semibold mb-1" for="time">Time job was done</label>
+            <input id="time" class="field mb-4" type="time" required>
+            <label class="block font-semibold mb-1" for="tech">Your name (technician)</label>
+            <input id="tech" class="field mb-6" type="text" autocomplete="off" placeholder="Optional">
+            <p id="err1" class="text-red-600 font-semibold mb-3 hidden"></p>
+            <button class="btn btn-brand" onclick="goStep2()">NEXT &rarr;</button>
+        </section>
+
+        <!-- STEP 2: approval -->
+        <section id="step2" class="step">
+            <h1 class="text-2xl font-bold mb-1">Homeowner approval</h1>
+            <p class="text-gray-600 mb-6">Do you approve the work completed today at <span id="addrEcho" class="font-semibold"></span>?</p>
+            <button class="btn btn-yes mb-4" onclick="approve(true)">YES, I APPROVE</button>
+            <button class="btn btn-no" onclick="approve(false)">NO</button>
+            <button class="block w-full text-center text-gray-500 mt-6 underline" onclick="show(1)">&larr; back</button>
+        </section>
+
+        <!-- STEP 3: reason (only when NO) -->
+        <section id="step3" class="step">
+            <h1 class="text-2xl font-bold mb-1">What's wrong?</h1>
+            <p class="text-gray-600 mb-4">Please tell us why you don't approve so Max can make it right.</p>
+            <textarea id="reason" class="field mb-4" rows="6" placeholder="Explain what you're not happy with..."></textarea>
+            <p id="err3" class="text-red-600 font-semibold mb-3 hidden"></p>
+            <button class="btn btn-brand" onclick="goSign()">NEXT &rarr;</button>
+            <button class="block w-full text-center text-gray-500 mt-6 underline" onclick="show(2)">&larr; back</button>
+        </section>
+
+        <!-- STEP 4: signature -->
+        <section id="step4" class="step">
+            <h1 class="text-2xl font-bold mb-1">Sign to confirm</h1>
+            <p class="text-gray-600 mb-4" id="signCopy"></p>
+            <canvas id="sig"></canvas>
+            <div class="flex justify-between items-center mt-2 mb-5">
+                <span class="text-xs text-gray-400">Sign with your finger</span>
+                <button class="text-sm underline text-gray-600" onclick="clearSig()">Clear</button>
+            </div>
+            <p id="err4" class="text-red-600 font-semibold mb-3 hidden"></p>
+            <button id="submitBtn" class="btn btn-brand" onclick="submitAll()">SUBMIT</button>
+            <button class="block w-full text-center text-gray-500 mt-6 underline" onclick="backFromSign()">&larr; back</button>
+        </section>
+
+        <!-- STEP 5: done -->
+        <section id="step5" class="step text-center">
+            <div class="text-6xl mb-3" id="doneIcon">&#10003;</div>
+            <h1 class="text-2xl font-bold mb-2" id="doneTitle">Thank you!</h1>
+            <p class="text-gray-600 mb-2" id="doneCopy"></p>
+            <p class="text-xs text-gray-400" id="doneRef"></p>
+            <button class="btn btn-brand mt-8" onclick="location.reload()">Start another job</button>
+        </section>
+    </div>
+
+    <script>
+    // Config
+    var ENDPOINT = 'https://n8n.dev.quantumos.ai/webhook/sr-job-completed';
+    var KEY = 'sr-jobdone-Q8m4v';
+    var state = { approved: null };
+
+    function $(id) { return document.getElementById(id); }
+    function show(n) {
+        document.querySelectorAll('.step').forEach(function (s) { s.classList.remove('active'); });
+        $('step' + n).classList.add('active');
+        var dots = document.querySelectorAll('#dots .dot');
+        var idx = n === 1 ? 0 : n === 2 ? 1 : n === 3 ? 2 : 3;
+        dots.forEach(function (d, i) { d.classList.toggle('on', i <= idx); });
+        window.scrollTo(0, 0);
+        if (n === 4) sizeCanvas();
+    }
+    function err(id, msg) { var e = $(id); e.textContent = msg || ''; e.classList.toggle('hidden', !msg); }
+
+    function goStep2() {
+        var name = $('name').value.trim(), addr = $('address').value.trim(), time = $('time').value;
+        if (!name || !addr || !time) { err('err1', 'Name, address and time are all required.'); return; }
+        err('err1', '');
+        $('addrEcho').textContent = addr;
+        show(2);
+    }
+    function approve(yes) {
+        state.approved = yes;
+        if (yes) { goSign(); } else { show(3); }
+    }
+    function goSign() {
+        if (state.approved === false) {
+            var r = $('reason').value.trim();
+            if (!r) { err('err3', 'Please explain why before continuing.'); return; }
+            err('err3', '');
+        }
+        $('signCopy').textContent = state.approved
+            ? 'By signing, I confirm the work at ' + $('address').value.trim() + ' was completed to my satisfaction.'
+            : 'By signing, I confirm I reviewed the work and have noted my concerns above.';
+        show(4);
+    }
+    function backFromSign() { show(state.approved === false ? 3 : 2); }
+
+    // Signature pad
+    var canvas = $('sig'), ctx = canvas.getContext('2d'), drawing = false, hasInk = false, last = null;
+    function sizeCanvas() {
+        var ratio = window.devicePixelRatio || 1;
+        var w = canvas.clientWidth, h = canvas.clientHeight;
+        if (canvas.width === Math.round(w * ratio) && canvas.height === Math.round(h * ratio)) return;
+        canvas.width = Math.round(w * ratio); canvas.height = Math.round(h * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#111';
+        hasInk = false;
+    }
+    function pos(e) {
+        var r = canvas.getBoundingClientRect();
+        var p = e.touches ? e.touches[0] : e;
+        return { x: p.clientX - r.left, y: p.clientY - r.top };
+    }
+    function start(e) { e.preventDefault(); drawing = true; last = pos(e); }
+    function move(e) {
+        if (!drawing) return; e.preventDefault();
+        var p = pos(e);
+        ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+        last = p; hasInk = true;
+    }
+    function end() { drawing = false; }
+    canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); window.addEventListener('mouseup', end);
+    canvas.addEventListener('touchstart', start, { passive: false }); canvas.addEventListener('touchmove', move, { passive: false }); canvas.addEventListener('touchend', end);
+    window.addEventListener('resize', function () { if ($('step4').classList.contains('active')) sizeCanvas(); });
+    function clearSig() { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.restore(); hasInk = false; }
+
+    function submitAll() {
+        if (!hasInk) { err('err4', 'Please sign in the box first.'); return; }
+        err('err4', '');
+        var btn = $('submitBtn'); btn.disabled = true; btn.textContent = 'Sending...';
+        var payload = {
+            key: KEY,
+            homeowner_name: $('name').value.trim(),
+            address: $('address').value.trim(),
+            time_done: $('time').value,
+            technician: $('tech').value.trim(),
+            approved: state.approved === true,
+            reason: state.approved ? '' : $('reason').value.trim(),
+            signature: canvas.toDataURL('image/png'),
+            submitted_at: new Date().toISOString(),
+            page: location.href
+        };
+        fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+            .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
+            .then(function (j) {
+                if (!j.ok) throw new Error(j.error || 'Submit failed');
+                $('doneIcon').textContent = state.approved ? '✓' : '✉';
+                $('doneTitle').textContent = state.approved ? 'Thank you!' : 'Got it - we\'ll make it right';
+                $('doneCopy').textContent = state.approved
+                    ? 'Your approval has been recorded and sent to Simply Reflections.'
+                    : 'Your feedback has been sent straight to Max. He will reach out shortly.';
+                $('doneRef').textContent = j.ref ? 'Ref ' + j.ref : '';
+                show(5);
+            })
+            .catch(function (e) {
+                err('err4', 'Could not send: ' + e.message + '. Check signal and tap Submit again.');
+                btn.disabled = false; btn.textContent = 'SUBMIT';
+            });
+    }
+    </script>
+</body>
+</html>
