@@ -1,5 +1,14 @@
 
-fetch('https://ipwho.is/')
+// Service area: a visitor's own choice wins; otherwise detect by IP (Arizona is the default).
+function srSetRegion(r) { document.body.classList.toggle('is__california', r === 'ca'); }
+function srToggleRegion() {
+    const next = document.body.classList.contains('is__california') ? 'az' : 'ca';
+    try { localStorage.setItem('sr_region', next); } catch (e) {}
+    srSetRegion(next);
+}
+window.srToggleRegion = srToggleRegion;
+let srSaved = null; try { srSaved = localStorage.getItem('sr_region'); } catch (e) {}
+if (srSaved) srSetRegion(srSaved); else fetch('https://ipwho.is/')
     .then(res => res.json())
     .then(data => {
         if (!data.success) return;

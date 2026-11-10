@@ -895,3 +895,5 @@ body:not(.is__california) .ca__content{
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
 }
+.region-switch{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:1px 10px;font-size:.75em;color:inherit;cursor:pointer;text-transform:none;letter-spacing:0}
+.region-switch:hover{background:rgba(255,255,255,.3)}
